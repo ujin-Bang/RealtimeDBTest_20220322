@@ -3,6 +3,8 @@ package com.example.realtimedbtest_20220322
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.databinding.DataBindingUtil
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.realtimedbtest_20220322.adapters.ChattingRecyclerAdapter
 import com.example.realtimedbtest_20220322.databinding.ActivityMainBinding
 import com.example.realtimedbtest_20220322.datas.ChattingData
 import com.google.firebase.database.DataSnapshot
@@ -18,6 +20,8 @@ class MainActivity : BaseActivity() {
     lateinit var binding: ActivityMainBinding
 
     val mChattingList = ArrayList<ChattingData>()
+
+    lateinit var mAdapter : ChattingRecyclerAdapter
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
@@ -43,6 +47,8 @@ class MainActivity : BaseActivity() {
                     snapshot.children.last().child("content").value.toString(),
                     snapshot.children.last().child("createdAt").value.toString()
                 ))
+
+                mAdapter.notifyDataSetChanged()
 
 
             }
@@ -71,6 +77,10 @@ class MainActivity : BaseActivity() {
     }
 
     override fun setValues() {
+
+        mAdapter = ChattingRecyclerAdapter(mContext, mChattingList)
+        binding.chattingRecyclerView.adapter = mAdapter
+        binding.chattingRecyclerView.layoutManager = LinearLayoutManager(mContext)
 
 
 
