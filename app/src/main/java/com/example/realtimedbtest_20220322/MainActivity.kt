@@ -4,15 +4,20 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.databinding.DataBindingUtil
 import com.example.realtimedbtest_20220322.databinding.ActivityMainBinding
+import com.example.realtimedbtest_20220322.datas.ChattingData
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import java.text.SimpleDateFormat
 import java.util.*
+import kotlin.collections.ArrayList
 
 class MainActivity : BaseActivity() {
+
     lateinit var binding: ActivityMainBinding
+
+    val mChattingList = ArrayList<ChattingData>()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
@@ -32,6 +37,12 @@ class MainActivity : BaseActivity() {
 
                 messageCount = snapshot.childrenCount
 
+//                snaphot => 마지막 자녀(최신 채팅 메세지) 추출 => ChattingData로 변환 + 목록에 추가
+
+                mChattingList.addAll( ChattingData(
+                    snapshot.children.last().child("content").value.toString(),
+                    snapshot.children.last().child("createdAt").value.toString()
+                ))
 
 
             }

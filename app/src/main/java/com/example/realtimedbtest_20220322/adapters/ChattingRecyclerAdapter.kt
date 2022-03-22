@@ -13,7 +13,7 @@ class ChattingRecyclerAdapter(
     val mList: List<ChattingData>
 ): RecyclerView.Adapter<ChattingRecyclerAdapter.MyViewHolder>() {
 
-    inner class MyViewHolder(view: View): RecyclerView.ViewHolder(view) {
+    inner class MyViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
 
         fun bind(data: ChattingData) {
@@ -36,3 +36,5 @@ class ChattingRecyclerAdapter(
 
             override fun getItemCount() = mList.size
         }
+    }
+}
